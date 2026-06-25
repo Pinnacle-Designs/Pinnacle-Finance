@@ -4,6 +4,11 @@ import AdSlot, { ADS_ENABLED } from './AdSlot';
 import FAQ from './FAQ';
 import Breadcrumb from './Breadcrumb';
 import { getRelatedCalculators } from '../data/calculators';
+import {
+  buildBreadcrumbSchema,
+  buildFAQSchema,
+  buildWebApplicationSchema,
+} from '../utils/seo';
 
 export default function CalculatorPage({
   title,
@@ -19,7 +24,17 @@ export default function CalculatorPage({
 
   return (
     <>
-      <SEOHead title={title} description={description} />
+      <SEOHead
+        title={title}
+        description={description}
+        path={currentPath}
+        type="website"
+        schema={[
+          buildWebApplicationSchema({ name: title, description, path: currentPath }),
+          buildFAQSchema(faq),
+          buildBreadcrumbSchema([{ label: title }]),
+        ]}
+      />
 
       <Breadcrumb items={[{ label: title }]} />
 

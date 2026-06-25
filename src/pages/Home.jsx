@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import AdSlot, { ADS_ENABLED } from '../components/AdSlot';
 import Logo from '../components/Logo';
+import SEOHead from '../components/SEOHead';
 import { CALCULATORS, CATEGORIES } from '../data/calculators';
-import { SITE_NAME, SITE_TAGLINE } from '../config/brand';
+import { SITE_TAGLINE } from '../config/brand';
+import { buildItemListSchema, buildWebSiteSchema } from '../utils/seo';
 
 const TRUST_SIGNALS = [
   'Free forever',
@@ -32,13 +33,12 @@ export default function Home() {
 
   return (
     <>
-      <Helmet>
-        <title>Free Financial Calculators — {SITE_NAME}</title>
-        <meta
-          name="description"
-          content={`${SITE_TAGLINE}. Free online financial calculators for mortgages, loans, retirement, budgeting, and more. No sign-up required.`}
-        />
-      </Helmet>
+      <SEOHead
+        title={`Free Financial Calculators`}
+        description={`${SITE_TAGLINE}. Free online financial calculators for mortgages, loans, retirement, budgeting, and more. No sign-up required.`}
+        path="/"
+        schema={[buildWebSiteSchema(), buildItemListSchema(CALCULATORS)]}
+      />
 
       <section className="relative overflow-hidden rounded-3xl bg-slate-950 px-6 py-14 md:py-20 mb-12 md:mb-16">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/20 via-transparent to-brand-secondary/10 pointer-events-none" />
