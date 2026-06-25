@@ -3,6 +3,11 @@ import { copyFileSync, readFileSync, writeFileSync, existsSync } from 'fs';
 const SPA_REDIRECT = `
     <script type="text/javascript">
       (function(l) {
+        var legacy = '/Pinnacle-Finance';
+        if (l.pathname.indexOf(legacy) === 0) {
+          var path = l.pathname.slice(legacy.length) || '/';
+          window.history.replaceState(null, '', path + l.search + l.hash);
+        }
         if (l.search[1] === '/') {
           var decoded = l.search.slice(1).split('&').map(function(s) {
             return s.replace(/~and~/g, '&');

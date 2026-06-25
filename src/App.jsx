@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ROUTER_BASENAME } from './config/brand';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -19,8 +19,10 @@ import RentVsBuyCalculator from './calculators/RentVsBuyCalculator';
 import TaxBracketCalculator from './calculators/TaxBracketCalculator';
 
 export default function App() {
+  const routerProps = ROUTER_BASENAME ? { basename: ROUTER_BASENAME } : {};
+
   return (
-    <BrowserRouter basename={ROUTER_BASENAME}>
+    <BrowserRouter {...routerProps}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -40,6 +42,7 @@ export default function App() {
           <Route path="rent-vs-buy-calculator" element={<RentVsBuyCalculator />} />
           <Route path="tax-bracket-calculator" element={<TaxBracketCalculator />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

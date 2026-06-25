@@ -8,9 +8,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pinnacle Finance — Free Financial Calculators</title>
+    <style>
+      #boot-fallback {
+        font-family: Inter, system-ui, sans-serif;
+        max-width: 32rem;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+        color: #0f172a;
+        line-height: 1.6;
+      }
+      #boot-fallback h1 {
+        font-size: 1.25rem;
+        margin: 0 0 0.75rem;
+      }
+      #boot-fallback code {
+        background: #f1f5f9;
+        padding: 0.15rem 0.4rem;
+        border-radius: 0.25rem;
+      }
+    </style>
+    <script>
+      if (location.protocol === 'file:') {
+        document.addEventListener('DOMContentLoaded', function () {
+          var root = document.getElementById('root');
+          if (!root) return;
+          root.innerHTML =
+            '<div id="boot-fallback">' +
+            '<h1>Open this project with the dev server</h1>' +
+            '<p>Do not open <code>index.html</code> directly in the browser.</p>' +
+            '<p>Run <code>npm run dev</code> in the project folder, then open the Local URL shown in the terminal (for example <code>http://localhost:5173</code>).</p>' +
+            '<p>Live site: <a href="https://pinnaclefinancecalc.com">https://pinnaclefinancecalc.com</a></p>' +
+            '</div>';
+        });
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="boot-fallback" aria-live="polite">Loading Pinnacle Finance…</div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
