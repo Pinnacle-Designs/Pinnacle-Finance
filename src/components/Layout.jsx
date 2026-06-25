@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import AdSlot, { ADS_ENABLED } from './AdSlot';
 import Logo from './Logo';
 import { CALCULATORS, CATEGORIES } from '../data/calculators';
-import { SITE_NAME, SITE_TAGLINE } from '../config/brand';
+import { SITE_NAME, SITE_TAGLINE, BUILT_BY } from '../config/brand';
 
 export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -165,6 +165,15 @@ export default function Layout() {
               For educational purposes only. Not financial advice. Consult a qualified professional before making financial decisions.
             </p>
             <p className="text-slate-500">© {new Date().getFullYear()} {SITE_NAME}</p>
+          </div>
+          <div className="border-t border-white/10 mt-8 pt-6 text-center text-sm text-slate-500">
+            <p>
+              Built by{' '}
+              <span className="font-semibold text-slate-300">{BUILT_BY}</span>
+            </p>
+            <p className="mt-1">
+              © {new Date().getFullYear()} {BUILT_BY}. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
