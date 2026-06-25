@@ -1,6 +1,6 @@
-// Placeholder that will be swapped for real AdSense code
-// Set to true when ready to show AdSense placeholders
-export const ADS_ENABLED = false;
+import { ADS_ENABLED } from '../config/ads';
+
+export { ADS_ENABLED };
 
 export default function AdSlot({ size = 'rectangle', className = '' }) {
   if (!ADS_ENABLED) return null;
