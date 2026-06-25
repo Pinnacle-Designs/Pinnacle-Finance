@@ -7,13 +7,15 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,12 +37,30 @@ jobs:
         run: |
           test -f dist/index.html || (echo "Missing dist/index.html" && exit 1)
           test -f dist/404.html || (echo "Missing dist/404.html" && exit 1)
-          echo "Build OK — $(wc -c < dist/index.html) bytes index.html"
+          test -f dist/CNAME || (echo "Missing dist/CNAME" && exit 1)
+          echo "dist contents:"
+          ls -la dist/
 
-      - name: Deploy to gh-pages branch
+      - name: Upload Pages artifact (GitHub Actions source)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Push to gh-pages branch (branch deploy source)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          cname: www.pinnaclefinancecalc.com
+          publish_branch: gh-pages
           force_orphan: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

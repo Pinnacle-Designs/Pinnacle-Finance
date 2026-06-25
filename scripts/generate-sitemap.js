@@ -1,7 +1,7 @@
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { CALCULATORS } from '../src/data/calculators.js';
 
-const SITE_URL = 'https://www.pinnaclefinancecalc.com';
+const SITE_URL = 'https://pinnaclefinancecalc.com';
 const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
