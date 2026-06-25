@@ -32,8 +32,21 @@ jobs:
           test -f dist/index.html || (echo "Missing dist/index.html" && exit 1)
           test -f dist/404.html || (echo "Missing dist/404.html" && exit 1)
           test -f dist/CNAME || (echo "Missing dist/CNAME" && exit 1)
-          echo "dist contents:"
-          ls -la dist/
+
+      # GitHub Pages is configured to publish from main/docs — deploy the built site there.
+      - name: Publish to docs/
+        run: |
+          rm -rf docs
+          cp -r dist docs
+
+      - name: Commit docs/ to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          git diff --staged --quiet && echo "No docs changes" && exit 0
+          git commit -m "Deploy site to docs/"
+          git push
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
