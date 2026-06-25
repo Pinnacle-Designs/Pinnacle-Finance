@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
 import SEOHead from './SEOHead';
+import SeoContent from './SeoContent';
 import AdSlot, { ADS_ENABLED } from './AdSlot';
 import FAQ from './FAQ';
 import Breadcrumb from './Breadcrumb';
 import { getRelatedCalculators } from '../data/calculators';
+import { getPageSeo } from '../data/seo';
 import {
   buildBreadcrumbSchema,
   buildFAQSchema,
   buildWebApplicationSchema,
+  buildWebPageSchema,
 } from '../utils/seo';
 
 export default function CalculatorPage({
@@ -21,16 +24,21 @@ export default function CalculatorPage({
   results,
 }) {
   const related = getRelatedCalculators(currentPath, 3);
+  const seo = getPageSeo(currentPath);
+  const metaTitle = seo?.seoTitle ?? title;
+  const metaDescription = seo?.metaDescription ?? description;
 
   return (
     <>
       <SEOHead
-        title={title}
-        description={description}
+        title={metaTitle}
+        description={metaDescription}
         path={currentPath}
+        keywords={seo?.keywords}
         type="website"
         schema={[
-          buildWebApplicationSchema({ name: title, description, path: currentPath }),
+          buildWebPageSchema({ name: metaTitle, description: metaDescription, path: currentPath }),
+          buildWebApplicationSchema({ name: title, description: metaDescription, path: currentPath }),
           buildFAQSchema(faq),
           buildBreadcrumbSchema([{ label: title }]),
         ]}
@@ -74,6 +82,10 @@ export default function CalculatorPage({
             <h2 className="text-xl font-bold text-slate-900 mb-3">How It Works</h2>
             <p className="text-slate-600 leading-relaxed">{howItWorks}</p>
           </section>
+
+          {seo && (
+            <SeoContent heading={seo.contentHeading} paragraphs={seo.paragraphs} />
+          )}
 
           <AdSlot size="banner" className="mb-8" />
 

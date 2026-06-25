@@ -8,6 +8,7 @@ export default function SEOHead({
   path = '/',
   image = DEFAULT_OG_IMAGE,
   type = 'website',
+  keywords,
   noIndex = false,
   schema,
 }) {
@@ -17,10 +18,12 @@ export default function SEOHead({
 
   return (
     <Helmet>
+      <html lang="en" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
       <link rel="canonical" href={canonical} />
-      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
+      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
 
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content={SITE_NAME} />
@@ -28,6 +31,7 @@ export default function SEOHead({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:alt" content={`${SITE_NAME} logo`} />
       <meta property="og:locale" content="en_US" />
 
       <meta name="twitter:card" content="summary_large_image" />

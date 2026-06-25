@@ -7,25 +7,46 @@ export function absoluteUrl(path = '/') {
   return `${SITE_URL.replace(/\/$/, '')}${normalized}`;
 }
 
+/** Primary keyword first, brand at end — fits Google SERP display */
 export function pageTitle(title) {
-  return title.includes(SITE_NAME) ? title : `${title} — ${SITE_NAME}`;
+  if (title.includes(SITE_NAME)) return title;
+  return `${title} | ${SITE_NAME}`;
 }
 
 export function buildOrganizationSchema() {
   return {
     '@type': 'Organization',
-    name: BUILT_BY,
+    name: SITE_NAME,
+    alternateName: BUILT_BY,
     url: SITE_URL,
+    logo: {
+      '@type': 'ImageObject',
+      url: DEFAULT_OG_IMAGE,
+    },
   };
 }
 
 export function buildWebSiteSchema() {
   return {
     '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
     name: SITE_NAME,
     description: SITE_TAGLINE,
     url: SITE_URL,
+    inLanguage: 'en-US',
     publisher: buildOrganizationSchema(),
+  };
+}
+
+export function buildWebPageSchema({ name, description, path }) {
+  return {
+    '@type': 'WebPage',
+    '@id': `${absoluteUrl(path)}#webpage`,
+    name,
+    description,
+    url: absoluteUrl(path),
+    inLanguage: 'en-US',
+    isPartOf: { '@id': `${SITE_URL}/#website` },
   };
 }
 
@@ -33,6 +54,8 @@ export function buildItemListSchema(calculators) {
   return {
     '@type': 'ItemList',
     name: 'Free Financial Calculators',
+    description: 'Complete list of free online financial calculators',
+    numberOfItems: calculators.length,
     itemListElement: calculators.map((calc, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -50,6 +73,8 @@ export function buildWebApplicationSchema({ name, description, path }) {
     url: absoluteUrl(path),
     applicationCategory: 'FinanceApplication',
     operatingSystem: 'Any',
+    browserRequirements: 'Requires JavaScript',
+    inLanguage: 'en-US',
     offers: {
       '@type': 'Offer',
       price: '0',

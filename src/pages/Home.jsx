@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import AdSlot, { ADS_ENABLED } from '../components/AdSlot';
 import Logo from '../components/Logo';
 import SEOHead from '../components/SEOHead';
+import SeoContent from '../components/SeoContent';
 import { CALCULATORS, CATEGORIES } from '../data/calculators';
+import { HOME_SEO } from '../data/seo';
 import { SITE_TAGLINE } from '../config/brand';
-import { buildItemListSchema, buildWebSiteSchema } from '../utils/seo';
+import { buildItemListSchema, buildWebPageSchema, buildWebSiteSchema } from '../utils/seo';
 
 const TRUST_SIGNALS = [
   'Free forever',
@@ -34,10 +36,19 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title={`Free Financial Calculators`}
-        description={`${SITE_TAGLINE}. Free online financial calculators for mortgages, loans, retirement, budgeting, and more. No sign-up required.`}
+        title={HOME_SEO.seoTitle}
+        description={HOME_SEO.metaDescription}
         path="/"
-        schema={[buildWebSiteSchema(), buildItemListSchema(CALCULATORS)]}
+        keywords={HOME_SEO.keywords}
+        schema={[
+          buildWebSiteSchema(),
+          buildWebPageSchema({
+            name: HOME_SEO.seoTitle,
+            description: HOME_SEO.metaDescription,
+            path: '/',
+          }),
+          buildItemListSchema(CALCULATORS),
+        ]}
       />
 
       <section className="relative overflow-hidden rounded-3xl bg-slate-950 px-6 py-14 md:py-20 mb-12 md:mb-16">
@@ -133,6 +144,8 @@ export default function Home() {
           </section>
         ))
       )}
+
+      <SeoContent heading={HOME_SEO.contentHeading} paragraphs={HOME_SEO.paragraphs} />
     </>
   );
 }
