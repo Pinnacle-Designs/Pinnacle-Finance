@@ -6,6 +6,8 @@ const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
   { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
+  { loc: `${SITE_URL}/about`, changefreq: 'yearly', priority: '0.5' },
+  { loc: `${SITE_URL}/privacy-policy`, changefreq: 'yearly', priority: '0.4' },
   ...CALCULATORS.map((calc) => ({
     loc: `${SITE_URL}${calc.path}`,
     changefreq: 'monthly',

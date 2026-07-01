@@ -156,15 +156,23 @@ export default function Layout() {
               </div>
             ))}
           </div>
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm">
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-start md:justify-between gap-6 text-sm">
             <div>
               <p className="font-semibold text-white">{SITE_NAME}</p>
               <p className="text-brand-secondary text-xs tracking-widest uppercase mt-1">{SITE_TAGLINE}</p>
+              <nav className="flex flex-wrap gap-x-4 gap-y-2 mt-4" aria-label="Legal">
+                <Link to="/about" className="text-slate-400 hover:text-white transition-colors">
+                  About
+                </Link>
+                <Link to="/privacy-policy" className="text-slate-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </nav>
             </div>
             <p className="max-w-xl leading-relaxed">
               For educational purposes only. Not financial advice. Consult a qualified professional before making financial decisions.
             </p>
-            <p className="text-slate-500">© {new Date().getFullYear()} {SITE_NAME}</p>
+            <p className="text-slate-500 shrink-0">© {new Date().getFullYear()} {SITE_NAME}</p>
           </div>
           <div className="border-t border-white/10 mt-8 pt-6 text-center text-sm text-slate-500">
             <p>

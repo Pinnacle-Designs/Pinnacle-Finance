@@ -17,6 +17,8 @@ import BudgetPlanner from './calculators/BudgetPlanner';
 import InvestmentReturnCalculator from './calculators/InvestmentReturnCalculator';
 import RentVsBuyCalculator from './calculators/RentVsBuyCalculator';
 import TaxBracketCalculator from './calculators/TaxBracketCalculator';
+import About from './pages/About';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 export default function App() {
   const routerProps = ROUTER_BASENAME ? { basename: ROUTER_BASENAME } : {};
@@ -41,6 +43,8 @@ export default function App() {
           <Route path="investment-return-calculator" element={<InvestmentReturnCalculator />} />
           <Route path="rent-vs-buy-calculator" element={<RentVsBuyCalculator />} />
           <Route path="tax-bracket-calculator" element={<TaxBracketCalculator />} />
+          <Route path="about" element={<About />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
